@@ -581,7 +581,7 @@ function drawGorillaFace(player) {
 
 function drawGorillaThoughtBubbles(player) {
   if (state.phase === "aiming") {
-    const currentPlayerIsComputer =
+    const currentPlayerIsComputer ==
       (settings.numberOfPlayers === 0 &&
         state.currentPlayer === 1 &&
         player === 1) ||
@@ -673,12 +673,12 @@ function drawBomb() {
     ctx.lineWidth = 2;
     ctx.moveTo(state.bomb.x, state.bomb.y + 20);
     ctx.lineTo(state.bomb.x, state.bomb.y + 120);
-    ctx.moveTo(state.bomb.x, state.bomb.y + 20);
+    ctx.moveTo(state.bomb.x, state.bomb.y + 20)
     ctx.lineTo(state.bomb.x - 5, state.bomb.y + 25);
     ctx.moveTo(state.bomb.x, state.bomb.y + 20);
     ctx.lineTo(state.bomb.x + 5, state.bomb.y + 25);
     ctx.stroke();
-  }
+  
 }
 
 // Event handlers
@@ -703,7 +703,7 @@ window.addEventListener("mousemove", function (e) {
 
     draw();
   }
-});
+};
 
 // Set values on the info panel
 function setInfo(deltaX, deltaY) {
@@ -730,19 +730,9 @@ window.addEventListener("mouseup", function () {
 });
 
 function computerThrow() {
-  const numberOfSimulations = 2 + state.round * 3;
-  const bestThrow = runSimulations(numberOfSimulations);
-
-  initializeBombPosition();
-  state.bomb.velocity.x = bestThrow.velocityX;
-  state.bomb.velocity.y = bestThrow.velocityY;
-  setInfo(bestThrow.velocityX, bestThrow.velocityY);
-
-  // Draw the aiming gorilla
-  draw();
-
-  // Make it look like the computer is thinking for a second
-  delayTimeoutID = setTimeout(throwBomb, 1000);
+  //This function is for the computer to throw bombs at the gorillas.
+  //Number of simulations are calculates, best throw is determined, the bomb position is initialized, velocity of it is set.
+  //The player is informed the same, the gorilla is drawn and a thinking delay is set for realism of the game.
 }
 
 // Simulate multiple throws and pick the best
@@ -796,14 +786,9 @@ function runSimulations(numberOfSimulations) {
 }
 
 function throwBomb() {
-  if (simulationMode) {
-    previousAnimationTimestamp = 0;
-    animate(16);
-  } else {
-    state.phase = "in flight";
-    previousAnimationTimestamp = undefined;
-    animationFrameRequestID = requestAnimationFrame(animate);
-  }
+  //Function to throw a bomb with transition from preparation phase to actual animation of the bomb throw.
+  //check for simulation mode. if yes then start a new animation sequence and initiate the animation.
+  // if not in sumulation mode, show that the bomb is airborne, start a new animation sequence, and constantly request for the next bomb flight animation frame for smooth animations.
 }
 
 function animate(timestamp) {
